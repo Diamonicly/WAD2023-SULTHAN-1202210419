@@ -31,7 +31,7 @@
 
             // Buatlah query untuk mengambil data dari database (gunakan query SELECT)
             $query = "SELECT * FROM showroom_mobil";
-            $result = $conn->query($query);
+            $result = $koneksi->query($query);
             
             
 

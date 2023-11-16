@@ -31,14 +31,15 @@ $harga_mobil = $_POST['harga_mobil'];
     $query = "INSERT INTO showroom_mobil (nama_mobil, brand_mobil, warna_mobil, tipe_mobil, harga_mobil) 
                 VALUES ('$nama_mobil', '$brand_mobil', '$warna_mobil', '$tipe_mobil', '$harga_mobil')";
     // (5) Buatkan kondisi jika eksekusi query berhasil
-    if ($conn->query($query) == TRUE) {
-        echo "Mobil berhasil ditambahkan!";
-        header("location: list_mobil.php");
+    if ($koneksi->query($query) == TRUE) {
+        echo "<script>alert ('Data berhasil ditambahkan!')
+        document.location.href='form_create_mobil.php'</script>";
     }
     // (6) Jika terdapat kesalahan, buatkan eksekusi query gagalnya 
     else {
-        echo "Error " . $query . "<br>" . $conn->error;
+        echo "<script>alert ('Data gagal ditambahkan!')
+        document.location.href='form_create_mobil.php'</script>";
     }
 // (7) Tutup koneksi ke database setelah selesai menggunakan database
-$conn = null;
+$koneksi = null;
 ?>
