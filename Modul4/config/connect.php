@@ -2,7 +2,7 @@
 <?php 
 
 // (1) Buatlah variable untuk connect ke database yang telah di import ke phpMyAdmin
-$host = "localhost:3306";
+$host = "localhost:3308";
 $username = "root";
 $password = "";
 $dbname = "modul4_jurnal";

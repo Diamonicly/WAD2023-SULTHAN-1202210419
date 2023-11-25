@@ -3,13 +3,11 @@
 require 'connect.php';
 
 // (1) Mulai session
-if(!isset($_SESSION)) {
-    session_start();
-}
+session_start();
 //
 
 // (2) Ambil nilai input dari form registrasi
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // a. Ambil nilai input email
     $email=$_POST['email'];
     // b. Ambil nilai input name
@@ -19,8 +17,8 @@ if(!isset($_SESSION)) {
     // d. Ambil nilai input password
     $password=$_POST['password'];
     // e. Ubah nilai input password menjadi hash menggunakan fungsi password_hash()
-    $pass=password_hash($password, PASSWORD_DEFAULT);
-    
+    $password=password_hash($password, PASSWORD_DEFAULT);
+}
 
 //
 
@@ -34,13 +32,17 @@ if (mysqli_num_rows($result) == 0){
     // a. Buatlah query untuk melakukan insert data ke dalam database
     $query = "INSERT INTO users (email, name, username, password) 
                 VALUES ('$email', '$name', '$username', '$password')";
-    $result = $db->query($query);
+    $insertQuery = $db->query($query);
 
     // b. Buat lagi perkondisian atau percabangan ketika query insert berhasil dilakukan
     //    Buat di dalamnya variabel session dengan key message untuk menampilkan pesan penadftaran berhasil
-    if ($result == TRUE){
-        $_SESSION['message']="Pendaftaran Berhasil";
-        header("Location: ../views/login.php");
+    if ($insertQuery) {
+        $_SESSION['message'] = 'Pendaftaran Berhasil, silahkan login';
+        $_SESSION['color'] = 'success';
+        header('location: ../views/login.php');
+        exit(); 
+    } else {
+        $_SESSION['message'] = 'Pendaftaran Gagal!';
     }
 }
 // 

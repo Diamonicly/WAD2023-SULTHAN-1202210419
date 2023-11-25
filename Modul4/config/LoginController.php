@@ -10,17 +10,17 @@ function login($input) {
     // 
 
     // (2) Ambil nilai input dari form login
-        // a. Ambil nilai input email
-        $email = $_POST['email'];
+    // a. Ambil nilai input email
+    $email = $input['email'];
         
-        // b. Ambil nilai input password
-        $password = $_POST['password'];
+    // b. Ambil nilai input password
+    $password = $input['password'];
         
     // 
 
     // (3) Buat dan lakukan query untuk mencari data dengan email yang sama
     $query = "SELECT * FROM users WHERE email='$email'";
-    $result = $db -> query($query);
+    $result = mysqli_query($db, $query);
     // 
 
     // (4) Buatlah perkondisian ketika email ditemukan ( gunakan mysqli_num_rows == 1 )
@@ -31,7 +31,7 @@ function login($input) {
         // 
 
         // b. Lakukan verifikasi password menggunakan fungsi password_verify
-        if(password_verify($password, $row["password"])){
+        if(password_verify($password, $row['password'])){
             
             // c. Set variabel session dengan key login untuk menyimpan status login
             $_SESSION["login"] = true;
@@ -46,7 +46,9 @@ function login($input) {
             // 
 
         // f. Buat kondisi else dan isi dengan variabel session dengan key message untuk meanmpilkan pesan error ketika password tidak sesuai
-        else {
+        } else {
+            echo "Password from form: $password<br>";
+            echo "Hashed password from database: {$row['password']}<br>";
             $_SESSION["message"] = "Password Tidak Sesuai!";
             $_SESSION["color"] = 'danger';
         }
@@ -61,8 +63,7 @@ function login($input) {
     }
     // 
 }
-// 
-}
+//
 
 // function untuk fitur "Remember Me"
 function rememberMe($cookie)
@@ -73,7 +74,7 @@ function rememberMe($cookie)
     // 
 
     // (7) Ambil nilai cookie yang ada
-    $id = cookie['id'];
+    $id = $cookie['id'];
     // 
 
     // (8) Buat dan lakukan query untuk mencari data dengan id yang sama
